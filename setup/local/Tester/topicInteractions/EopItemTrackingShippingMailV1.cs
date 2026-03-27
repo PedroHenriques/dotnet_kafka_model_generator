@@ -44,7 +44,7 @@ public class EopItemTrackingShippingMailV1
       },
     };
 
-    var tcs = new TaskCompletionSource();
+    var tcs = new TaskCompletionSource<bool>();
     this._kafka.Publish(
       TOPIC_NAME,
       new Message<KafkaTopicKey, EopItemTrackingShippingMailV1Value>
@@ -62,7 +62,7 @@ public class EopItemTrackingShippingMailV1
         }
 
         Console.WriteLine($"---\nPublished event: topic {res.Topic} | partition: {res.Partition} | offset: {res.Offset}\n---");
-        tcs.SetResult();
+        tcs.SetResult(true);
       }
     );
 
@@ -71,7 +71,7 @@ public class EopItemTrackingShippingMailV1
 
   public Task Subscribe(CancellationTokenSource cts)
   {
-    var tcs = new TaskCompletionSource();
+    var tcs = new TaskCompletionSource<bool>();
 
     this._kafka.Subscribe(
       [TOPIC_NAME],
@@ -88,7 +88,7 @@ public class EopItemTrackingShippingMailV1
         this._kafka.Commit(res);
         Console.WriteLine($"---\nConsumed event: topic {res.Topic} | partition: {res.Partition} | offset: {res.Offset} | message key: {JsonConvert.SerializeObject(res.Message.Key)} | message value: {JsonConvert.SerializeObject(res.Message.Value)}\n---");
 
-        tcs.SetResult();
+        tcs.SetResult(true);
         return Task.CompletedTask;
       },
       cts
