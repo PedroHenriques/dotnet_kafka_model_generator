@@ -24,14 +24,27 @@ var consumerConfigJson = new ConsumerConfig
 {
   BootstrapServers = kafkaConStr,
   GroupId = "example-consumer-group-json",
-  AutoOffsetReset = AutoOffsetReset.Latest,
+  AutoOffsetReset = AutoOffsetReset.Earliest,
   EnableAutoCommit = false,
 };
 
 var tasks = new List<Task>();
+var cts = new CancellationTokenSource(10000);
 
 var eopItemTrackingShippingNexusV1 = new EopItemTrackingShippingNexusV1(schemaRegistryConfig, producerConfigJson, consumerConfigJson);
 tasks.Add(eopItemTrackingShippingNexusV1.Publish());
+tasks.Add(eopItemTrackingShippingNexusV1.Subscribe(cts));
 
+var eopItemTrackingExpObjectV1 = new EopItemTrackingExpObjectV1(schemaRegistryConfig, producerConfigJson, consumerConfigJson);
+tasks.Add(eopItemTrackingExpObjectV1.Publish());
+tasks.Add(eopItemTrackingExpObjectV1.Subscribe(cts));
 
-await Task.WhenAll(tasks);
+var eopItemTrackingShippingMailV1 = new EopItemTrackingShippingMailV1(schemaRegistryConfig, producerConfigJson, consumerConfigJson);
+tasks.Add(eopItemTrackingShippingMailV1.Publish());
+tasks.Add(eopItemTrackingShippingMailV1.Subscribe(cts));
+
+await Task.WhenAny(new List<Task>
+{
+  Task.Delay(10000, cts.Token),
+  Task.WhenAll(tasks)
+});

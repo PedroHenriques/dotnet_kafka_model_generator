@@ -83,12 +83,12 @@ public class EopItemTrackingShippingNexusV1
       {
         if (ex != null)
         {
-          Console.WriteLine($"Publish on topic: {TOPIC_NAME} | Ex: {ex.Message}");
+          Console.WriteLine($"---\nPublish on topic: {TOPIC_NAME} | Ex: {ex.Message}\n---");
           tcs.SetException(ex);
           return;
         }
 
-        Console.WriteLine($"Published event: topic {res.Topic} | partition: {res.Partition} | offset: {res.Offset}");
+        Console.WriteLine($"---\nPublished event: topic {res.Topic} | partition: {res.Partition} | offset: {res.Offset}\n---");
         tcs.SetResult();
       }
     );
@@ -96,28 +96,25 @@ public class EopItemTrackingShippingNexusV1
     return tcs.Task;
   }
 
-  public Task Subscribe()
+  public Task Subscribe(CancellationTokenSource cts)
   {
     var tcs = new TaskCompletionSource();
 
-    var cts = new CancellationTokenSource();
     this._kafka.Subscribe(
       [TOPIC_NAME],
       (res, ex) =>
       {
         if (ex != null)
         {
-          Console.WriteLine($"Consume from topic: {TOPIC_NAME} | Ex: {ex.Message}");
+          Console.WriteLine($"---\nConsume from topic: {TOPIC_NAME} | Ex: {ex.Message}\n---");
           tcs.SetException(ex);
 
-          cts.Cancel();
           return Task.CompletedTask;
         }
 
         this._kafka.Commit(res);
-        Console.WriteLine($"Consumed event: topic {res.Topic} | partition: {res.Partition} | offset: {res.Offset} | message key: {JsonConvert.SerializeObject(res.Message.Key)} | message value: {JsonConvert.SerializeObject(res.Message.Value)}");
+        Console.WriteLine($"---\nConsumed event: topic {res.Topic} | partition: {res.Partition} | offset: {res.Offset} | message key: {JsonConvert.SerializeObject(res.Message.Key)} | message value: {JsonConvert.SerializeObject(res.Message.Value)}\n---");
 
-        cts.Cancel();
         tcs.SetResult();
         return Task.CompletedTask;
       },
