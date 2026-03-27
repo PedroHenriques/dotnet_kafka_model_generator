@@ -1,10 +1,10 @@
 # Build stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0-noble AS build
 WORKDIR /source
-COPY --link ./src/Api/Api.csproj ./Api/Api.csproj
-RUN dotnet restore ./Api/Api.csproj --arch x64
-COPY --link ./src/Api ./Api/
-RUN dotnet publish ./Api/Api.csproj --os linux --arch x64 --no-restore -o /app
+COPY --link ./setup/local/Tester/Tester.csproj ./setup/local/Tester/Tester.csproj
+RUN dotnet restore ./setup/local/Tester/Tester.csproj --arch x64
+COPY --link ./setup/local/Tester ./setup/local/Tester/
+RUN dotnet publish ./setup/local/Tester/Tester.csproj --os linux --arch x64 --no-restore -o /app
 
 
 # Runtime stage
@@ -15,4 +15,4 @@ ENV \
     LANG=en_US.UTF-8
 WORKDIR /app
 COPY --link --from=build /app .
-ENTRYPOINT ["dotnet", "Api.dll"]
+ENTRYPOINT ["dotnet", "Tester.dll"]

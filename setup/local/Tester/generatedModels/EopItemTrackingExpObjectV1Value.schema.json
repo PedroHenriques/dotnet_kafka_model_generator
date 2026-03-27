@@ -1,0 +1,1022 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "additionalProperties": false,
+  "properties": {
+    "metadata": {
+      "additionalProperties": false,
+      "properties": {
+        "correlation_id": {
+          "example": "c6ef4871-dd33-4e45-91f3-80df6fc0caf0",
+          "type": "string"
+        },
+        "data_type": {
+          "example": "schema/json/traffic/traffic-cdc-shipping-v2.json",
+          "type": "string"
+        },
+        "interchange_id": {
+          "example": "c6ef4871-dd33-4e45-91f3-80df6fc0caf0",
+          "type": "string"
+        },
+        "source": {
+          "example": "urn:com:cttexpress:interchange:source:mail-manifest-ms",
+          "type": "string"
+        },
+        "timestamp": {
+          "example": "2024-10-18T07:52:58.113769+00:00",
+          "format": "date-time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "interchange_id",
+        "timestamp",
+        "correlation_id",
+        "source",
+        "data_type"
+      ],
+      "type": "object"
+    },
+    "shipping": {
+      "additionalProperties": false,
+      "properties": {
+        "additionals": {
+          "additionalProperties": false,
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "additional_code": {
+                "example": "EMSE002",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "additional_value": {
+                "example": "100",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "customs_info": {
+          "properties": {
+            "associated_document": {
+              "properties": {
+                "doc_type": {
+                  "description": "Type of the associated document that accompanies",
+                  "examples": [
+                    "380"
+                  ],
+                  "title": "Associated document type",
+                  "type": "string"
+                },
+                "identifier": {
+                  "description": "Reference or identifier of the document that accompanies",
+                  "examples": [
+                    "INV-2025-00123"
+                  ],
+                  "title": "Associated document identifier",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "Name or description of the document that accompanies",
+                  "examples": [
+                    "Commercial Invoice"
+                  ],
+                  "title": "Associated document name",
+                  "type": "string"
+                }
+              },
+              "type": [
+                "object",
+                "null"
+              ]
+            },
+            "company_name": {
+              "description": "Sender's name",
+              "examples": [
+                "RITA"
+              ],
+              "title": "Company name",
+              "type": "string"
+            },
+            "content_piece": {
+              "_minItems": 1,
+              "items": {
+                "properties": {
+                  "lcc_provider_product_identifier": {
+                    "description": "The unique product ID assigned by the LCC provider. Please use “UNKNOWN” if e-retailer didn’t specify the product code used by their LCC provider.",
+                    "examples": [
+                      "UNKNOWN"
+                    ],
+                    "title": "Lcc provider product identifier",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "net_weight_kg": {
+                    "description": "The NET weight of items being shipped. This is important for certain countries. The weight should be in kilograms",
+                    "examples": [
+                      0.89
+                    ],
+                    "title": "Product weight",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "origin_country_code": {
+                    "description": "ISO 3166–1 country code of the location in which the content piece was produced or manufactured",
+                    "examples": [
+                      "CN"
+                    ],
+                    "title": "Origin country code",
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "product_description": {
+                    "description": "Product description provided by the e-Retailer (from their product catalogue)",
+                    "examples": [
+                      "Par de Ténis"
+                    ],
+                    "title": "Product description",
+                    "type": "string"
+                  },
+                  "product_duty_rate": {
+                    "description": "The percentage duty rate for the product in the destination. If not applicable or unknown, please provide “0”",
+                    "examples": [
+                      0
+                    ],
+                    "title": "Product duty rate",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "product_duty_value": {
+                    "description": "The value of the duty payable on the product",
+                    "examples": [
+                      0
+                    ],
+                    "title": "Product duty value",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "product_tax_rate": {
+                    "description": "The percentage tax rate for the product in the destination country. If unknown, please provide “0”",
+                    "examples": [
+                      0
+                    ],
+                    "title": "Product tax rate",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "product_tax_value": {
+                    "description": "The value of the tax payable on the product",
+                    "examples": [
+                      0
+                    ],
+                    "title": "Product tax value",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "product_total": {
+                    "description": "The total cost of the product including duty and taxes",
+                    "examples": [
+                      0
+                    ],
+                    "title": "Product total",
+                    "type": "number"
+                  },
+                  "product_total_currency": {
+                    "description": "Currency of the declared total value for the content piece",
+                    "examples": [
+                      "EUR"
+                    ],
+                    "title": "Content piece product total currency",
+                    "type": "string"
+                  },
+                  "product_value": {
+                    "description": "The unit price of the product being calculated, without a currency symbol, in the local currency of the destination country",
+                    "examples": [
+                      50
+                    ],
+                    "title": "Product value",
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "sequence_number": {
+                    "description": "Sequence number of the product (content piece) within the set of products associated with the item",
+                    "examples": [
+                      1
+                    ],
+                    "title": "Sequence number",
+                    "type": "integer"
+                  },
+                  "tariff_code": {
+                    "description": "The Harmonized Systems (HS) code used to define the product. It can be 6, 8 or 10 digits. Specific countries may require one of those standards (eg Irish Customs requires 10 digits)",
+                    "examples": [
+                      "970110"
+                    ],
+                    "title": "Tariff code",
+                    "type": "string"
+                  },
+                  "units": {
+                    "description": "Units",
+                    "examples": [
+                      1
+                    ],
+                    "title": "Units",
+                    "type": [
+                      "integer",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "sequence_number",
+                  "product_description",
+                  "tariff_code",
+                  "product_total"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "declared_gross_weigth_kg": {
+              "description": "Weight of the item in kg, as declared by the mailer",
+              "examples": [
+                1.1
+              ],
+              "title": "Declared gross weigth",
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "destination_country_code": {
+              "description": "The ANSI 2 character code for the country the item is being sent to, as defined by ISO3066",
+              "examples": [
+                "US"
+              ],
+              "title": "Destination country code",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "destination_postal_operator": {
+              "description": "Postal Operator Code of the inbound/destination Postal Operator, as defined in UPU Code list 118 Party identifiers",
+              "examples": [
+                "J1CUSA"
+              ],
+              "title": "Destrination postal operation",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "eretailer_identifier": {
+              "description": "Human readable identifier of the e-Retailer as a PDDP Member. Unique e-Retailer ID as provided by IPC on setup",
+              "examples": [
+                "PTEXPROCAN071"
+              ],
+              "title": "Eretailer identifier",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "lcc_provider_description": {
+              "description": "Name of the LCC Provider. Please use UNKNOWN if e-retailer didnt specify their LCC provider",
+              "examples": [
+                "10232160"
+              ],
+              "title": "LCC provider description",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "lcc_provider_identifier": {
+              "description": "Human readable identifier of the LCC Provider. Please use UNKNOWN if e-retailer didn t specify their LCC provider",
+              "examples": [
+                "300300115"
+              ],
+              "title": "LCC provider identifier",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "nature_of_transaction_code": {
+              "description": "The default value 11 for Sale of Goods as per UPU code list 136, the value for indication for customs of the type of contract under which the item is mailed, will be provided in this field",
+              "examples": [
+                "11"
+              ],
+              "title": "Nature of transaction code",
+              "type": "string"
+            },
+            "observations": {
+              "description": "Ancillary information related to customs processing of the item, expressed as a free text value.",
+              "examples": [
+                "DDP-POST"
+              ],
+              "title": "Observations",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "origin_postal_operator": {
+              "description": "Postal Operator Code of the outbound/origin Postal Operator, as defined in UPU Code list 118 Party identifiers",
+              "examples": [
+                "J1CPTA"
+              ],
+              "title": "Origin postal operator",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "payment_provider_description": {
+              "description": "Name of the Payment Provider. Please use UNKNOWN if e-retailer didn t specify their payment platform provider",
+              "examples": [
+                "UNKNOWN"
+              ],
+              "title": "Payment provider description",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "payment_provider_identifier": {
+              "description": "Human readable identifier of the Payment Provider. Please use UNKNOWN if e-retailer didn t specify the product code used by their LCC provider",
+              "examples": [
+                "UNKNOWN"
+              ],
+              "title": "Payment provider identifier",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipient_address": {
+              "description": "Addressee s street address",
+              "examples": [
+                "Cambridge Road, 14"
+              ],
+              "title": "Recipient address",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipient_country_code": {
+              "description": "Addressee s country. The ANSI 2-character code for the country the item is being sent to, as defined by ISO3066",
+              "examples": [
+                "US"
+              ],
+              "title": "Recipient country code",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipient_email": {
+              "description": "Addressee s email address",
+              "examples": [
+                "martin.lexter@ipc.com"
+              ],
+              "title": "Recipient email",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipient_fax": {
+              "description": "Fax number of the recipient, corresponding to addressee",
+              "examples": [
+                "3512194090"
+              ],
+              "title": "Recipient fax",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipient_name": {
+              "description": "Full name of the addressee",
+              "examples": [
+                "Martin Lexter"
+              ],
+              "title": "recipient name",
+              "type": "string"
+            },
+            "recipient_phone": {
+              "description": "Addressee s phone number",
+              "examples": [
+                "+17155510343"
+              ],
+              "title": "Recipient phone",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipient_postal_code": {
+              "description": "Recipient postal code",
+              "examples": [
+                "WI 54455"
+              ],
+              "title": "Recipient postal code",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipient_ref": {
+              "description": "Addressee s National ID Number if applicable",
+              "examples": [
+                "52472222V"
+              ],
+              "title": "Recipient reference",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipient_town": {
+              "description": "Addressee s city",
+              "examples": [
+                "Kronenwetter"
+              ],
+              "title": "Recipient town",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "shipper_address": {
+              "description": "Sender s street name",
+              "examples": [
+                "Av da Liberdade, 254"
+              ],
+              "title": "Shipper address",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "shipper_country_code": {
+              "description": "The ANSI 2 character code for the country the item is being sent from, as defined by ISO3066",
+              "examples": [
+                "PT"
+              ],
+              "title": "Shipper country code",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "shipper_email": {
+              "description": "Sender s email address",
+              "examples": [
+                "multiprodutos.pt@multiprod.pt"
+              ],
+              "title": "shipper email",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "shipper_phone": {
+              "description": "Sender s phone number",
+              "examples": [
+                "+351217890123"
+              ],
+              "title": "Shipper phone",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "shipper_postal_code": {
+              "description": "Sender s postcode",
+              "examples": [
+                "2775-097"
+              ],
+              "title": "Shipper postal code",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "shipper_town": {
+              "description": "Sender s city",
+              "examples": [
+                "Lisboa"
+              ],
+              "title": "Shipper town",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "shopping_cart": {
+              "properties": {
+                "cost": {
+                  "description": "Without a currency symbol, in the local currency of the destination country",
+                  "examples": [
+                    0
+                  ],
+                  "title": "Cost",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "currency": {
+                  "description": "The ANSI 3 character code of the Destination Country Currency",
+                  "examples": [
+                    "EUR"
+                  ],
+                  "title": "Currency",
+                  "type": "string"
+                },
+                "destination_country_currency": {
+                  "description": "The ANSI 3 character code for the preferred currency of the Destination Country",
+                  "examples": [
+                    "USD"
+                  ],
+                  "title": "Destination country currency",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "duty_deminimis_value": {
+                  "description": "The value for Duty deminimis",
+                  "examples": [
+                    0
+                  ],
+                  "title": "Duty deminimis value",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "flc_total_cost_no_surcharge": {
+                  "description": "The total of all products submitted with the shipping cost, duty and tax applied. This is a subtotal that contains all costs except surcharges",
+                  "examples": [
+                    110
+                  ],
+                  "title": "FLC total cost no surcharge",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "insured_value": {
+                  "description": "Amount of the item’s insured value",
+                  "examples": [
+                    0
+                  ],
+                  "title": "Insured value",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "surcharge_value": {
+                  "description": "Admin Fee charged by the Destination Post (in the currency of the Destination Country). If unknown, please provide “0”",
+                  "examples": [
+                    0
+                  ],
+                  "title": "surcharge value",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "tax_deminimis_value": {
+                  "description": "The value for Tax deminimis",
+                  "examples": [
+                    0
+                  ],
+                  "title": "Tax deminimis value",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "total_cost": {
+                  "description": "Total of all products submitted with the shipping cost, duty, tax, surcharge and insurance",
+                  "examples": [
+                    110
+                  ],
+                  "title": "Total cost",
+                  "type": "number"
+                },
+                "total_duty": {
+                  "description": "The total duty payable on all items being shipped",
+                  "examples": [
+                    0
+                  ],
+                  "title": "Total duty",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "total_tax": {
+                  "description": "The total tax payable on all items being shipped",
+                  "examples": [
+                    0
+                  ],
+                  "title": "total tax",
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "value": {
+                  "description": "Admin Fee charged by the Destination Post (in the currency of the Destination Country). If unknown, please provide “0”",
+                  "examples": [
+                    110
+                  ],
+                  "title": "Value",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "value",
+                "total_cost",
+                "currency"
+              ],
+              "type": [
+                "object",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "company_name",
+            "recipient_name",
+            "content_piece",
+            "nature_of_transaction_code"
+          ],
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "format": {
+          "description": "format",
+          "example": "3",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "items": {
+          "additionalProperties": false,
+          "description": "Shipping item list",
+          "items": {
+            "additionalProperties": false,
+            "description": "Represents a shipping item",
+            "properties": {
+              "item_code": {
+                "description": "Item code ",
+                "example": "RF933545362PT",
+                "type": "string"
+              },
+              "item_height_declared": {
+                "description": "Item height declared cm",
+                "example": "10",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "item_length_declared": {
+                "description": "Item length declared cm",
+                "example": "10",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "item_weight_declared": {
+                "description": "Item weight declared gr",
+                "example": "10",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "item_width_declared": {
+                "description": "Item width declared cm",
+                "example": "10",
+                "type": [
+                  "number",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "item_code"
+            ],
+            "type": "object"
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "type": [
+            "array",
+            "null"
+          ]
+        },
+        "recipient": {
+          "additionalProperties": false,
+          "properties": {
+            "address": {
+              "description": "Address",
+              "example": "Avenida das flores",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "contact": {
+              "description": "Contact",
+              "example": "User",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "country_code": {
+              "description": "Country code",
+              "example": "PT",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "email_notify_address": {
+              "description": "Email notify address",
+              "example": "user@ctt.pt",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "name": {
+              "description": "Name",
+              "example": "User",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "phones": {
+              "additionalProperties": false,
+              "items": {
+                "examples": [
+                  "943456424",
+                  "660659555"
+                ],
+                "type": "string"
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "postal_code": {
+              "description": "Postal code",
+              "example": "2770-000",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "postal_code_desc": {
+              "description": "Postal code description",
+              "example": "Parede",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tax_identification_number": {
+              "description": "Tax identification number",
+              "example": "196520274",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "town_name": {
+              "description": "Town name",
+              "example": "Murtal",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "sender": {
+          "additionalProperties": false,
+          "properties": {
+            "address": {
+              "description": "Address",
+              "example": "Avenida das flores",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "client_ref": {
+              "description": "Client Reference",
+              "example": "AB1433",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "contact": {
+              "description": "Contact",
+              "example": "User",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "country_code": {
+              "description": "Country code",
+              "example": "PT",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "document_key": {
+              "description": "Document Key",
+              "example": "00288377",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "email_notify_address": {
+              "description": "Email notify address",
+              "example": "user@ctt.pt",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "name": {
+              "description": "Name",
+              "example": "User",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "phones": {
+              "additionalProperties": false,
+              "items": {
+                "examples": [
+                  "943456424",
+                  "660659555"
+                ],
+                "type": "string"
+              },
+              "type": [
+                "array",
+                "null"
+              ]
+            },
+            "postal_code": {
+              "description": "Postal code",
+              "example": "2775-097",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "postal_code_desc": {
+              "description": "Postal code description",
+              "example": "Parede",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "recipient_key": {
+              "description": "Recipient key",
+              "example": "998978676",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "tax_identification_number": {
+              "description": "Tax identification number",
+              "example": "196520274",
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "town_name": {
+              "description": "Town name",
+              "example": "Murtal",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "shipping_code": {
+          "description": "shipping code",
+          "example": "0079350082809711180510",
+          "type": "string"
+        },
+        "shipping_type_code": {
+          "description": "shipping type code",
+          "example": "CORF013.01",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "shipping_weight_declared": {
+          "description": "shipping weight declared gr",
+          "example": 67,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "tax_zone": {
+          "description": "Tax zone",
+          "example": "33",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "velocity": {
+          "description": "Velocity",
+          "example": "3",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "shipping_code"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "metadata",
+    "shipping"
+  ],
+  "type": "object",
+  "title": "EopItemTrackingExpObjectV1Value"
+}
