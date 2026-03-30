@@ -1017,6 +1017,6 @@
     "metadata",
     "shipping"
   ],
-  "type": "object",
-  "title": "EopItemTrackingShippingMailV1Value"
+  "title": "ItemTrafficShippingMailValue",
+  "type": "object"
 }
