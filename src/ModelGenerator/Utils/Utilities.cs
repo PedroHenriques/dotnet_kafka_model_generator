@@ -1,9 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
 using ModelGenerator.Types;
 
 namespace ModelGenerator.Utils;
 
 public static class Utilities
 {
+  [ExcludeFromCodeCoverage(Justification = "Not worth unit testing since it only prints to stdout a static message.")]
   public static void PrintUsage()
   {
     Console.WriteLine("""
