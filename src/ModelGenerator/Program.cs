@@ -1,12 +1,10 @@
 ﻿using System.Text;
-using NJsonSchema;
-using NJsonSchema.CodeGeneration.CSharp;
-using Newtonsoft.Json.Linq;
 using ModelGenerator.Types;
 using System.Diagnostics.CodeAnalysis;
 using ModelGenerator.Utils;
+using ModelGenerator.Core;
 
-[ExcludeFromCodeCoverage(Justification = "Not unit testable due to instantiating classes for tool setup.")]
+[ExcludeFromCodeCoverage(Justification = "Not unit testable due to handling file IO operations. Will be tested with integration tests.")]
 internal class Program
 {
   private static async Task Main(string[] args)
@@ -31,38 +29,21 @@ internal class Program
       return;
     }
 
-    if (string.IsNullOrWhiteSpace(options.OutputDir))
+    try
     {
-      Console.Error.WriteLine("Missing required argument: --output-dir");
+      Validations.ValidateArgs(options);
+    }
+    catch (Exception ex)
+    {
+      Console.Error.WriteLine(ex.Message);
       Console.Error.WriteLine();
       Utilities.PrintUsage();
       Environment.ExitCode = 1;
       return;
     }
 
-    var hasSchemaJson = string.IsNullOrWhiteSpace(options.SchemaJson) == false;
-    var hasSchemaFile = string.IsNullOrWhiteSpace(options.SchemaFile) == false;
-
-    if (hasSchemaJson == false && hasSchemaFile == false)
-    {
-      Console.Error.WriteLine("You must provide either --schema-json or --schema-file.");
-      Console.Error.WriteLine();
-      Utilities.PrintUsage();
-      Environment.ExitCode = 1;
-      return;
-    }
-
-    if (hasSchemaJson && hasSchemaFile)
-    {
-      Console.Error.WriteLine("Arguments --schema-json and --schema-file cannot be used together.");
-      Console.Error.WriteLine();
-      Utilities.PrintUsage();
-      Environment.ExitCode = 1;
-      return;
-    }
-
-    string schemaJson;
-    if (hasSchemaFile)
+    string schema;
+    if (string.IsNullOrWhiteSpace(options.SchemaFile) == false)
     {
       if (File.Exists(options.SchemaFile!) == false)
       {
@@ -71,11 +52,18 @@ internal class Program
         return;
       }
 
-      schemaJson = await File.ReadAllTextAsync(options.SchemaFile!);
+      schema = await File.ReadAllTextAsync(options.SchemaFile!);
     }
     else
     {
-      schemaJson = options.SchemaJson!;
+      schema = options.SchemaJson!;
+    }
+
+    if (string.IsNullOrWhiteSpace(schema))
+    {
+      Console.Error.WriteLine("Schema content is empty.");
+      Environment.ExitCode = 1;
+      return;
     }
 
     var outputDir = options.OutputDir!;
@@ -91,60 +79,25 @@ internal class Program
 
     try
     {
-      var parsedRoot = JObject.Parse(schemaJson);
+      var generatorOutput = await ClassGenerator.GenerateJson(
+        schema, targetNamespace, explicitRootClassName
+      );
 
-      var originalTitle = parsedRoot["title"]?.Value<string>();
-      var rootName = string.IsNullOrWhiteSpace(explicitRootClassName) == false
-        ? explicitRootClassName!
-        : string.IsNullOrWhiteSpace(originalTitle) == false
-          ? Models.ToPascalCaseIdentifier(originalTitle!)
-          : "KafkaMessage";
-
-      if (string.IsNullOrWhiteSpace(parsedRoot["title"]?.Value<string>()))
-      {
-        parsedRoot["title"] = rootName;
-      }
-
-      var normalizedSchemaJson = parsedRoot.ToString();
-      var schema = await JsonSchema.FromJsonAsync(normalizedSchemaJson);
-
-      var settings = new CSharpGeneratorSettings
-      {
-        Namespace = targetNamespace,
-        ClassStyle = CSharpClassStyle.Poco,
-        JsonLibrary = CSharpJsonLibrary.NewtonsoftJson,
-        GenerateDataAnnotations = false,
-        GenerateJsonMethods = false,
-        RequiredPropertiesMustBeDefined = true,
-        GenerateOptionalPropertiesAsNullable = true,
-        GenerateNullableReferenceTypes = true,
-        TypeAccessModifier = "public",
-        TypeNameGenerator = new CustomTypeNameGenerator(rootName),
-        PropertyNameGenerator = new CSharpPropertyNameGenerator(),
-      };
-
-      var generator = new CSharpGenerator(schema, settings);
-      var generatedCode = generator.GenerateFile();
-
-      generatedCode = Models.AddHeader(generatedCode, parsedRoot["title"]?.Value<string>() ?? rootName);
-      generatedCode = Models.EnsurePartialClasses(generatedCode);
-      generatedCode = Models.EnsureRootJsonObjectTitle(generatedCode, parsedRoot["title"]?.Value<string>() ?? rootName);
-
-      var rootFileName = $"{rootName}.g.cs";
-      var schemaFileName = $"{rootName}.schema.json";
+      var rootFileName = $"{generatorOutput.RootClassName}.g.cs";
+      var schemaFileName = $"{generatorOutput.RootClassName}.schema.json";
 
       var outputCodePath = Path.Combine(outputDir, rootFileName);
       var outputSchemaPath = Path.Combine(outputDir, schemaFileName);
 
       await File.WriteAllTextAsync(
         outputCodePath,
-        generatedCode,
+        generatorOutput.GeneratedCode,
         new UTF8Encoding(encoderShouldEmitUTF8Identifier: false)
       );
 
       await File.WriteAllTextAsync(
         outputSchemaPath,
-        normalizedSchemaJson,
+        generatorOutput.NormalizedSchema,
         new UTF8Encoding(encoderShouldEmitUTF8Identifier: false)
       );
 
