@@ -47,7 +47,7 @@ public static class ClassGenerator
     var generator = new CSharpGenerator(schemaJson, settings);
     var generatedCode = generator.GenerateFile();
 
-    generatedCode = Models.AddHeader(generatedCode, parsedRoot["title"]?.Value<string>() ?? rootClassName);
+    generatedCode = Models.AddHeader(generatedCode, SchemaTypes.JSON, parsedRoot["title"]?.Value<string>() ?? rootClassName);
     generatedCode = Models.EnsurePartialClasses(generatedCode);
     generatedCode = Models.EnsureRootJsonObjectTitle(generatedCode, parsedRoot["title"]?.Value<string>() ?? rootClassName);
 

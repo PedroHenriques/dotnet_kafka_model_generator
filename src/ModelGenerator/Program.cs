@@ -56,7 +56,7 @@ internal class Program
     }
     else
     {
-      schema = options.SchemaJson!;
+      schema = options.SchemaContent!;
     }
 
     if (string.IsNullOrWhiteSpace(schema))

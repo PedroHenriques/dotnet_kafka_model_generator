@@ -10,16 +10,20 @@ public static class Validations
     {
       throw new Exception("Missing required argument: --output-dir");
     }
+    if (options.SchemaType == null)
+    {
+      throw new Exception("Missing required argument: --schema-type");
+    }
 
-    var hasSchemaJson = string.IsNullOrWhiteSpace(options.SchemaJson) == false;
+    var hasSchemaContent = string.IsNullOrWhiteSpace(options.SchemaContent) == false;
     var hasSchemaFile = string.IsNullOrWhiteSpace(options.SchemaFile) == false;
 
-    if (hasSchemaJson == false && hasSchemaFile == false)
+    if (hasSchemaContent == false && hasSchemaFile == false)
     {
       throw new Exception("You must provide either --schema-json or --schema-file.");
     }
 
-    if (hasSchemaJson && hasSchemaFile)
+    if (hasSchemaContent && hasSchemaFile)
     {
       throw new Exception("Arguments --schema-json and --schema-file cannot be used together.");
     }

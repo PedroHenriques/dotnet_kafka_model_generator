@@ -22,7 +22,7 @@ public class ModelsTests : IDisposable
 
 """;
 
-    Assert.Equal(header + code, ModelGenerator.Utils.Models.AddHeader(code, "test schema title"));
+    Assert.Equal(header + code, ModelGenerator.Utils.Models.AddHeader(code, Types.SchemaTypes.JSON, "test schema title"));
   }
 
   [Fact]

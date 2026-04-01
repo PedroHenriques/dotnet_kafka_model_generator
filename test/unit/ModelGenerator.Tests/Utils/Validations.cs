@@ -15,6 +15,7 @@ public class ValidationsTests : IDisposable
     CliOptions options = new CliOptions
     {
       OutputDir = "some/out/dir",
+      SchemaType = SchemaTypes.JSON,
       SchemaFile = "some/schema/file",
     };
 
@@ -24,7 +25,7 @@ public class ValidationsTests : IDisposable
   }
 
   [Fact]
-  public void ValidateArgs_IftheOutputDirIsProvided_ItShouldThrowAnExceptionWithTheExpectedMessage()
+  public void ValidateArgs_IftheOutputDirIsNotProvided_ItShouldThrowAnExceptionWithTheExpectedMessage()
   {
     CliOptions options = new CliOptions
     {
@@ -36,11 +37,24 @@ public class ValidationsTests : IDisposable
   }
 
   [Fact]
+  public void ValidateArgs_IftheSchemaTypeIsNotProvided_ItShouldThrowAnExceptionWithTheExpectedMessage()
+  {
+    CliOptions options = new CliOptions
+    {
+      OutputDir = "some/path",
+    };
+
+    var ex = Assert.Throws<Exception>(() => Validations.ValidateArgs(options));
+    Assert.Equal("Missing required argument: --schema-type", ex.Message);
+  }
+
+  [Fact]
   public void ValidateArgs_IfNeitherASchemaJsonContentNorASchemaFileAreProvided_ItShouldThrowAnExceptionWithTheExpectedMessage()
   {
     CliOptions options = new CliOptions
     {
       OutputDir = "something",
+      SchemaType = SchemaTypes.JSON,
     };
 
     var ex = Assert.Throws<Exception>(() => Validations.ValidateArgs(options));
@@ -53,7 +67,8 @@ public class ValidationsTests : IDisposable
     CliOptions options = new CliOptions
     {
       OutputDir = "something",
-      SchemaJson = "json stuff",
+      SchemaType = SchemaTypes.JSON,
+      SchemaContent = "json stuff",
       SchemaFile = "file/path",
     };
 

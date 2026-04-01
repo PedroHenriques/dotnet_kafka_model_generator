@@ -12,17 +12,17 @@ public class UtilitiesTests : IDisposable
   [Theory]
   [InlineData(
     new[] {
-      "--help", "--schema-json", "schema json", "--schema-file", "schema file",
+      "--help", "--schema-content", "schema json", "--schema-file", "schema file",
       "--output-dir", "output dir", "--namespace", "some namespace",
-      "--root-class-name", "TestClassName"
+      "--root-class-name", "TestClassName", "--schema-type", "json"
     },
-    "{\"ShowHelp\":true,\"SchemaJson\":\"schema json\",\"SchemaFile\":\"schema file\",\"OutputDir\":\"output dir\",\"Namespace\":\"some namespace\",\"RootClassName\":\"TestClassName\"}"
+    "{\"ShowHelp\":true,\"SchemaContent\":\"schema json\",\"SchemaFile\":\"schema file\",\"SchemaType\":0,\"OutputDir\":\"output dir\",\"Namespace\":\"some namespace\",\"RootClassName\":\"TestClassName\"}"
   )]
   [InlineData(
     new[] {
       "-h", "--root-class-name", "SomeTestClassName"
     },
-    "{\"ShowHelp\":true,\"SchemaJson\":null,\"SchemaFile\":null,\"OutputDir\":null,\"Namespace\":null,\"RootClassName\":\"SomeTestClassName\"}"
+    "{\"ShowHelp\":true,\"SchemaContent\":null,\"SchemaFile\":null,\"SchemaType\":null,\"OutputDir\":null,\"Namespace\":null,\"RootClassName\":\"SomeTestClassName\"}"
   )]
   public void ParseArgs_ItShouldReturnTheExpectedObject(string[] inputArgs, string expectedSerializedOutput)
   {
