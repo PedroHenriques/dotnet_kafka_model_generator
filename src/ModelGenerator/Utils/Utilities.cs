@@ -21,7 +21,7 @@ Examples:
 Notes:
   --schema-content    Full schema content as a string
   --schema-file       Path to a file containing the JSON schema
-  --schema-type       One of the supported types the schema. Accepts: json
+  --schema-type       One of the supported schema types. Accepts: json
   --output-dir        Directory where generated files will be written
   --namespace         Optional. Default: Generated.Kafka.Models
   --root-class-name   Optional. Overrides the generated root class name
