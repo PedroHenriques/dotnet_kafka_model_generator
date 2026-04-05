@@ -10,19 +10,19 @@ A tool that parses Kafka topic schemas and generates C# POCO models that can be 
 # Installing the tool
 ```sh
 # Install as a global tool: Makes the tool available system-wide (in your PATH)
-dotnet tool install -g kafka-model-generator
+dotnet tool install -g KafkaModelGenerator
 
 # Install a specific version, as a global tool
-dotnet tool install -g kafka-model-generator --version <VERSION>
+dotnet tool install -g KafkaModelGenerator --version <VERSION>
 
 ---
 
 # Install as a local tool: Installs into .config/dotnet-tools.json
 dotnet new tool-manifest   # only once per repo
-dotnet tool install kafka-model-generator
+dotnet tool install KafkaModelGenerator
 
 # Install a specific version, as a local tool
-dotnet tool install kafka-model-generator --version <VERSION>
+dotnet tool install KafkaModelGenerator --version <VERSION>
 ```
 
 # Using the tool
