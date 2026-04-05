@@ -1,34 +1,63 @@
-# Your application name
-Your application brief description.
-
-## Applications wiki
-
-[Link to applications wiki](https://wiki.com/something)
+# Kafka Topic Model Generator
+A tool that parses Kafka topic schemas and generates C# POCO models that can be used with Confluent's SDK to publish and subscribe to topics.
 
 ## Main functionalities
-- Store data in the schema you want
-- API to create, update and delete entities and their data
-- Register entities (Ex: countries, holidays, stores, etc.)
-- Manage the data of each registered entity
-- Register notifications for an entity
-  - Every change made to a data point of an entity can trigger notifications to 1 or many destinations
-  - Use this to notify other applications that need to know when data changes
-  - Supported destinations:
-    - Kafka topic
-    - HTTP(S) webhook
+- Parses Kafka topic schemas. Supported formats:
+  - `json`
+- Outputs C# POCO models tailored to work with Confluent's .Net SDK serializers
+- Outputs the Kafka topic schemas, used as inputs with any necessary adjustments to work with the generated models
+
+# Installing the tool
+```sh
+# Install as a global tool: Makes the tool available system-wide (in your PATH)
+dotnet tool install -g KafkaModelGenerator
+
+# Install a specific version, as a global tool
+dotnet tool install -g KafkaModelGenerator --version <VERSION>
+
+---
+
+# Install as a local tool: Installs into .config/dotnet-tools.json
+dotnet new tool-manifest   # only once per repo
+dotnet tool install KafkaModelGenerator
+
+# Install a specific version, as a local tool
+dotnet tool install KafkaModelGenerator --version <VERSION>
+```
+
+# Using the tool
+```sh
+Usage:
+  kafka-model-generator --schema-content "<schema-content>" --schema-type "<schema-type>" --output-dir "<output-directory>" [--namespace "<namespace>"] [--root-class-name "<root-class-name>"]
+  kafka-model-generator --schema-file "<schema-file-path>" --schema-type "<schema-type>" --output-dir "<output-directory>" [--namespace "<namespace>"] [--root-class-name "<root-class-name>"]
+
+Examples:
+  kafka-model-generator --schema-content "{ \"title\": \"OrderCreated\", \"type\": \"object\", \"properties\": { \"id\": { \"type\": \"string\" } }, \"required\": [\"id\"] }" --schema-type "json" --output-dir "./Generated"
+
+  kafka-model-generator --schema-file "./schemas/order-created.json" --schema-type "json" --output-dir "./Generated" --namespace "MyCompany.Kafka.Models"
+
+Notes:
+  --schema-content    Full schema content as a string
+  --schema-file       Path to a file containing the JSON schema
+  --schema-type       One of the supported schema types. Accepts: json
+  --output-dir        Directory where generated files will be written
+  --namespace         Optional. Default: Generated.Kafka.Models
+  --root-class-name   Optional. Overrides the generated root class name
+  --help              Show help
+```
+
+## Notes
+- 1 and only 1 of `--schema-content` and `--schema-file` must be provided
+- The tool will generate 2 files in the provided `--output-dir`:
+  - 1 file with the C# POCOs
+  - 1 file with the normalized schema, with potential necessary adjustments to make it work with Confluent's .Net SDK
+- Confluent's .Net SDK expects the schema's title to match the C# class name. The tool will follow this priority when de termining the generated C# class name:
+  - `--root-class-name`, if provided
+  - The schema's title property, if present
+  - The default value: KafkaMessage 
 
 # Application Architecture
 [more information here](/documentation/architecture.md)
-
-# Technical information
-## Stack
-This application uses the following technologies:
-- C# .Net
-- MongoDb
-- Redis
-
-The application also interacts with the following technologies:
-- Kafka
 
 # Developer information
 ## Requisites
@@ -65,16 +94,13 @@ The available services are declared in the local environment Docker compose proj
 This will run a Docker compose project and start several networked Docker containers will all the services and necessary tools to use the application.
 
 The following services will be running in the containers:
-- List your services here
 - Confluent community edition Kafka Broker
 - Confluent Schema Registry
-- A GUI for MongoDb
-- A GUI for Redis
 - A GUI for Kafka
 
 There will also be a stopped container named `db_init` which sets up the MongoDb replica set and exits.
 
-2. **[OPTIONAL]** From the root of the project run the command
+1. **[OPTIONAL]** From the root of the project run the command
 ```sh
 sh cli/start_elk.sh [services]
 ```
@@ -101,27 +127,18 @@ And check if the `elasticsearch` service is `healthy`.
 
 3. Interact with the local environment via the following URLs:
 
-`MongoDb GUI`: [http://localhost:9000](http://localhost:9000) (user: appUser | pw: appPw)
-
-`Redis GUI`: [http://localhost:9001](http://localhost:9001)<br>
-**NOTES:**<br>
-Accept the T&C and submit to enter.
-![alt text](documentation/redis_tec.png)
-
-Add the following databases:<br>
-`redis://default:password@api_redis:6379`<br>
-
 `Kafka GUI`: [http://localhost:9002](http://localhost:9002)<br>
 **NOTES:**<br>
-Add a topic with the name `myTestTopic` with, at least, 1 partition.
-Register the `myTestTopic-key` and `myTestTopic-value` schemas, using the contents of the files `setup/local/myTestTopic_schema_key.json` and `setup/local/myTestTopic_schema_value.json`, respectively and the type `JSON`.
+Add a topic with the name `myTestTopicJson` with, at least, 1 partition.
+Register the `myTestTopicJson-key` and `myTestTopicJson-value` schemas, using the contents of the files `setup/local/tester_kafka_json_schema_key.json` and `setup/local/tester_kafka_json_schema_value.json`, respectively.
+Add a topic with the name `myTestTopicAvro` with, at least, 1 partition.
+Register the `myTestTopicAvro-key` and `myTestTopicAvro-value` schemas, using the contents of the files `setup/local/tester_kafka_avro_schema_key.json` and `setup/local/tester_kafka_avro_schema_value.json`, respectively.
 
 `Kibana`: [http://localhost:9003](http://localhost:9003)
 
-`API`: [http://localhost:10000](http://localhost:10000)<br>
-Use the Postman collection at `setup/local/XPTO.postman_collection` to interact with the application.
+`Test API`: [http://localhost:10000](http://localhost:10000)<br>
 
-`API Swagger UI`: [http://localhost:10000/swagger](http://localhost:10000/swagger)
+`Test API Swagger UI`: [http://localhost:10000/swagger](http://localhost:10000/swagger)
 
 ### Stop the local environment
 From the root of the project run the command

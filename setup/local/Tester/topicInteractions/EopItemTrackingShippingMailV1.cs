@@ -1,6 +1,6 @@
 using Confluent.Kafka;
 using Confluent.SchemaRegistry;
-using KafkaUtilsV1 = Toolkit.Utils.Kafka<Tester.Models.EopItemTrackingShippingMailV1.KafkaTopicKey, Tester.Models.EopItemTrackingShippingMailV1.EopItemTrackingShippingMailV1Value>;
+using KafkaUtilsV1 = Toolkit.Utils.Kafka<Tester.Models.EopItemTrackingShippingMailV1.KafkaTopicKey, Tester.Models.EopItemTrackingShippingMailV1.ItemTrafficShippingMailValue>;
 using Toolkit.Types;
 using Toolkit;
 using Newtonsoft.Json;
@@ -11,15 +11,15 @@ namespace Tester;
 public class EopItemTrackingShippingMailV1
 {
   private const string TOPIC_NAME = "eop.item-tracking.shipping-mail.v1";
-  private readonly IKafka<KafkaTopicKey, EopItemTrackingShippingMailV1Value> _kafka;
+  private readonly IKafka<KafkaTopicKey, ItemTrafficShippingMailValue> _kafka;
 
   public EopItemTrackingShippingMailV1(SchemaRegistryConfig schemaRegistryConfig, ProducerConfig producerConfig, ConsumerConfig consumerConfig)
   {
-    KafkaInputs<KafkaTopicKey, EopItemTrackingShippingMailV1Value> kafkaInputsEopItemTrackingShippingNexusV1 = KafkaUtilsV1.PrepareInputs(
+    KafkaInputs<KafkaTopicKey, ItemTrafficShippingMailValue> kafkaInputsEopItemTrackingShippingNexusV1 = KafkaUtilsV1.PrepareInputs(
       schemaRegistryConfig, producerConfig, consumerConfig, null, SchemaFormat.Json
     );
 
-    this._kafka = new Kafka<KafkaTopicKey, EopItemTrackingShippingMailV1Value>(kafkaInputsEopItemTrackingShippingNexusV1);
+    this._kafka = new Kafka<KafkaTopicKey, ItemTrafficShippingMailValue>(kafkaInputsEopItemTrackingShippingNexusV1);
   }
 
   public Task Publish()
@@ -28,7 +28,7 @@ public class EopItemTrackingShippingMailV1
     {
       Id = "some test key",
     };
-    EopItemTrackingShippingMailV1Value value = new EopItemTrackingShippingMailV1Value
+    ItemTrafficShippingMailValue value = new ItemTrafficShippingMailValue
     {
       Metadata = new Models.EopItemTrackingShippingMailV1.Metadata
       {
@@ -47,7 +47,7 @@ public class EopItemTrackingShippingMailV1
     var tcs = new TaskCompletionSource<bool>();
     this._kafka.Publish(
       TOPIC_NAME,
-      new Message<KafkaTopicKey, EopItemTrackingShippingMailV1Value>
+      new Message<KafkaTopicKey, ItemTrafficShippingMailValue>
       {
         Key = key,
         Value = value,
