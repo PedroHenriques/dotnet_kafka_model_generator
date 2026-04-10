@@ -26,8 +26,8 @@
     <None Include="..\..\LICENSE" Pack="true" PackagePath="\"></None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NJsonSchema" Version="11.5.2"></PackageReference>
-    <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="11.5.2"></PackageReference>
+    <PackageReference Include="NJsonSchema" Version="11.6.0"></PackageReference>
+    <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="11.6.0"></PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4"></PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.201" PrivateAssets="all"></PackageReference>
   </ItemGroup>
