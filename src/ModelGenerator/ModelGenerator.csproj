@@ -6,7 +6,7 @@
     <ToolCommandName>kafka-model-generator</ToolCommandName>
     <IsPackable>true</IsPackable>
     <PackageId>KafkaModelGenerator</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Pedro Henriques</Authors>
     <PackageDescription>A .NET tool that generates C# models from Kafka topic JSON schemas</PackageDescription>
     <PackageTags>dotnet-tool;kafka;json-schema;confluent;codegen</PackageTags>
@@ -26,9 +26,9 @@
     <None Include="..\..\LICENSE" Pack="true" PackagePath="\"></None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NJsonSchema" Version="11.6.0"></PackageReference>
-    <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="11.6.0"></PackageReference>
+    <PackageReference Include="NJsonSchema" Version="11.6.1"></PackageReference>
+    <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="11.6.1"></PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4"></PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.201" PrivateAssets="all"></PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.203" PrivateAssets="all"></PackageReference>
   </ItemGroup>
 </Project>
