@@ -1,0 +1,31 @@
+{
+  "type": "record",
+  "name": "PaymentProcessedKey",
+  "namespace": "Test.Kafka.Events",
+  "fields": [
+    {
+      "name": "paymentId",
+      "type": "string"
+    },
+    {
+      "name": "sourceSystem",
+      "type": {
+        "type": "enum",
+        "name": "SourceSystem",
+        "symbols": [
+          "WEB",
+          "MOBILE",
+          "POS"
+        ]
+      }
+    },
+    {
+      "name": "region",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null
+    }
+  ]
+}

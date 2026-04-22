@@ -1,0 +1,69 @@
+{
+  "type": "record",
+  "name": "ShipmentCreated",
+  "namespace": "Test.Kafka.Events",
+  "fields": [
+    {
+      "name": "shipmentId",
+      "type": "string"
+    },
+    {
+      "name": "status",
+      "type": {
+        "type": "enum",
+        "name": "ShipmentStatus",
+        "symbols": [
+          "CREATED",
+          "IN_TRANSIT",
+          "DELIVERED",
+          "FAILED"
+        ]
+      }
+    },
+    {
+      "name": "items",
+      "type": {
+        "type": "array",
+        "items": {
+          "type": "record",
+          "name": "ShipmentItem",
+          "fields": [
+            {
+              "name": "sku",
+              "type": "string"
+            },
+            {
+              "name": "quantity",
+              "type": "int"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "destination",
+      "type": {
+        "type": "record",
+        "name": "Address",
+        "fields": [
+          {
+            "name": "street",
+            "type": "string"
+          },
+          {
+            "name": "city",
+            "type": "string"
+          },
+          {
+            "name": "postalCode",
+            "type": "string"
+          },
+          {
+            "name": "country",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "OrderCreatedKey",
+  "namespace": "Test.Kafka.Events",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": "string"
+    }
+  ]
+}
