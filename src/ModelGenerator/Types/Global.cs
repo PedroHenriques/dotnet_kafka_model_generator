@@ -2,5 +2,6 @@ namespace ModelGenerator.Types;
 
 public enum SchemaTypes
 {
-  JSON
+  JSON,
+  AVRO
 }
