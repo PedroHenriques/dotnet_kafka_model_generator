@@ -8,7 +8,25 @@ namespace ModelGenerator.Core;
 
 public static class ClassGenerator
 {
-  public static async Task<GeneratedOutput> GenerateJson(
+  public static async Task<GeneratedOutput> Generate(
+    SchemaTypes? schemaType, string schema, string targetNamespace,
+    string? explicitRootClassName
+  )
+  {
+    switch (schemaType)
+    {
+      case SchemaTypes.JSON:
+        return await GenerateJson(schema, targetNamespace, explicitRootClassName);
+
+      case SchemaTypes.AVRO:
+        return await GenerateAvro(schema, targetNamespace, explicitRootClassName);
+
+      default:
+        throw new Exception($"The provided schema type '{schemaType}' is not supported.");
+    }
+  }
+
+  private static async Task<GeneratedOutput> GenerateJson(
     string schema, string targetNamespace, string? explicitRootClassName
   )
   {

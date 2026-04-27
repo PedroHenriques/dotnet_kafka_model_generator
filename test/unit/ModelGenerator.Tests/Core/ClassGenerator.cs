@@ -11,7 +11,7 @@ public class ClassGeneratorTests : IDisposable
   public void Dispose() { }
 
   [Fact]
-  public async Task GenerateJson_ItShouldReturnTheExpectedModelAndRootClassNameAndNormalizedSchema()
+  public async Task Generate_IfTheSchemaTypeIsJson_ItShouldReturnTheExpectedModelAndRootClassNameAndNormalizedSchema()
   {
     var originalSchema = """
 {
@@ -86,7 +86,7 @@ namespace Tester.Models.EopItemTrackingShippingMailV1
         NormalizedSchema = normalizedSchema,
         RootClassName = "EopItemTrackingShippingMailV1Key",
       }),
-      JsonConvert.SerializeObject(await ClassGenerator.GenerateJson(originalSchema, "Tester.Models.EopItemTrackingShippingMailV1", "EopItemTrackingShippingMailV1Key"))
+      JsonConvert.SerializeObject(await ClassGenerator.Generate(SchemaTypes.JSON, originalSchema, "Tester.Models.EopItemTrackingShippingMailV1", "EopItemTrackingShippingMailV1Key"))
     );
   }
 
@@ -95,7 +95,7 @@ namespace Tester.Models.EopItemTrackingShippingMailV1
   [InlineData("\"title\": \"KafkaTopicKey\",", null, "KafkaTopicKey")]
   [InlineData("\"title\": \"\",", null, "KafkaMessage")]
   [InlineData("", null, "KafkaMessage")]
-  public async Task GenerateJson_ItShouldReturnTheExpectedRootClassName(string schemaTitle, string? explicitRootClassName, string expectedRootClassName)
+  public async Task Generate_IfTheSchemaTypeIsJson_ItShouldReturnTheExpectedRootClassName(string schemaTitle, string? explicitRootClassName, string expectedRootClassName)
   {
     var originalSchema = $$"""
 {
@@ -116,7 +116,7 @@ namespace Tester.Models.EopItemTrackingShippingMailV1
 
     Assert.Equal(
       expectedRootClassName,
-      (await ClassGenerator.GenerateJson(originalSchema, "Tester.Models.EopItemTrackingShippingMailV1", explicitRootClassName)).RootClassName
+      (await ClassGenerator.Generate(SchemaTypes.JSON, originalSchema, "Tester.Models.EopItemTrackingShippingMailV1", explicitRootClassName)).RootClassName
     );
   }
 }
