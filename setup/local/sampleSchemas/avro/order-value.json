@@ -25,7 +25,10 @@
     },
     {
       "name": "createdAt",
-      "type": "long"
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
     }
   ]
 }
