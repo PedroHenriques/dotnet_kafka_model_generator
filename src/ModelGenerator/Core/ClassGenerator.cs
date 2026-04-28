@@ -1,3 +1,5 @@
+using System.CodeDom.Compiler;
+using Microsoft.CSharp;
 using ModelGenerator.Types;
 using ModelGenerator.Utils;
 using Newtonsoft.Json.Linq;
@@ -75,5 +77,73 @@ public static class ClassGenerator
       RootClassName = rootClassName,
       NormalizedSchema = normalizedSchema,
     };
+  }
+
+  private static Task<GeneratedOutput> GenerateAvro(
+    string schema, string targetNamespace, string? explicitRootClassName
+  )
+  {
+    var parsedRoot = JObject.Parse(schema);
+
+    var rootType = parsedRoot["type"]?.Value<string>();
+    if (!string.Equals(rootType, "record", StringComparison.OrdinalIgnoreCase))
+    {
+      throw new ArgumentException(
+        "The root Avro schema must be of type 'record' to generate strongly-typed models."
+      );
+    }
+
+    var originalName = parsedRoot["name"]?.Value<string>();
+    var rootClassName = string.IsNullOrWhiteSpace(explicitRootClassName) == false
+      ? Models.ToPascalCaseIdentifier(explicitRootClassName!)
+      : string.IsNullOrWhiteSpace(originalName) == false
+        ? Models.ToPascalCaseIdentifier(originalName!)
+        : "KafkaMessage";
+
+    parsedRoot["name"] = rootClassName;
+
+    var sourceNamespace = parsedRoot["namespace"]?.Value<string>();
+    if (string.IsNullOrWhiteSpace(sourceNamespace))
+    {
+      parsedRoot["namespace"] = targetNamespace;
+      sourceNamespace = targetNamespace;
+    }
+
+    var normalizedSchema = parsedRoot.ToString();
+
+    var codeGen = new Avro.CodeGen();
+    var namespaceMapping = new[]
+    {
+      new KeyValuePair<string, string>(sourceNamespace, targetNamespace),
+    };
+    codeGen.AddSchema(normalizedSchema, namespaceMapping);
+    var compileUnit = codeGen.GenerateCode();
+
+    string generatedCode;
+    using (var provider = new CSharpCodeProvider())
+    using (var writer = new StringWriter())
+    {
+      provider.GenerateCodeFromCompileUnit(
+        compileUnit,
+        writer,
+        new CodeGeneratorOptions
+        {
+          BracingStyle = "C",
+          IndentString = "  ",
+        }
+      );
+
+      generatedCode = writer.ToString();
+    }
+
+    generatedCode = Models.AddHeader(generatedCode, SchemaTypes.AVRO, rootClassName);
+    generatedCode = Models.EnsurePartialClasses(generatedCode);
+
+    return Task.FromResult(new GeneratedOutput
+    {
+      GeneratedCode = generatedCode,
+      RootClassName = rootClassName,
+      NormalizedSchema = normalizedSchema,
+    });
   }
 }

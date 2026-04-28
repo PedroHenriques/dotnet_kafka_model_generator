@@ -79,8 +79,8 @@ internal class Program
 
     try
     {
-      var generatorOutput = await ClassGenerator.GenerateJson(
-        schema, targetNamespace, explicitRootClassName
+      var generatorOutput = await ClassGenerator.Generate(
+        options.SchemaType, schema, targetNamespace, explicitRootClassName
       );
 
       var rootFileName = $"{generatorOutput.RootClassName}.g.cs";
