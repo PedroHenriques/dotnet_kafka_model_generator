@@ -1,0 +1,15 @@
+{
+  "type": "record",
+  "name": "ShipmentV1Key",
+  "namespace": "Test.Kafka.Events",
+  "fields": [
+    {
+      "name": "shipmentId",
+      "type": "string"
+    },
+    {
+      "name": "tenantId",
+      "type": "string"
+    }
+  ]
+}

@@ -43,6 +43,18 @@ var eopItemTrackingShippingMailV1 = new EopItemTrackingShippingMailV1(schemaRegi
 tasks.Add(eopItemTrackingShippingMailV1.Publish());
 tasks.Add(eopItemTrackingShippingMailV1.Subscribe(cts));
 
+var orderV1 = new OrderV1(schemaRegistryConfig, producerConfigJson, consumerConfigJson);
+tasks.Add(orderV1.Publish());
+tasks.Add(orderV1.Subscribe(cts));
+
+var paymentV1 = new PaymentV1(schemaRegistryConfig, producerConfigJson, consumerConfigJson);
+tasks.Add(paymentV1.Publish());
+tasks.Add(paymentV1.Subscribe(cts));
+
+var shipmentV1 = new ShipmentV1(schemaRegistryConfig, producerConfigJson, consumerConfigJson);
+tasks.Add(shipmentV1.Publish());
+tasks.Add(shipmentV1.Subscribe(cts));
+
 await Task.WhenAny(new List<Task>
 {
   Task.Delay(10000, cts.Token),
