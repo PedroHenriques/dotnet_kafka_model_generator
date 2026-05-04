@@ -4,6 +4,7 @@ A tool that parses Kafka topic schemas and generates C# POCO models that can be 
 ## Main functionalities
 - Parses Kafka topic schemas. Supported formats:
   - `json`
+  - `avro`
 - Outputs C# POCO models tailored to work with Confluent's .Net SDK serializers
 - Outputs the Kafka topic schemas, used as inputs with any necessary adjustments to work with the generated models
 
@@ -53,5 +54,5 @@ Notes:
   - 1 file with the normalized schema, with potential necessary adjustments to make it work with Confluent's .Net SDK
 - Confluent's .Net SDK expects the schema's title to match the C# class name. The tool will follow this priority when de termining the generated C# class name:
   - `--root-class-name`, if provided
-  - The schema's title property, if present
+  - The schema's `title` (for JSON) or `name` (for AVRO) property, if present
   - The default value: KafkaMessage

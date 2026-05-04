@@ -4,6 +4,7 @@ A tool that parses Kafka topic schemas and generates C# POCO models that can be 
 ## Main functionalities
 - Parses Kafka topic schemas. Supported formats:
   - `json`
+  - `avro`
 - Outputs C# POCO models tailored to work with Confluent's .Net SDK serializers
 - Outputs the Kafka topic schemas, used as inputs with any necessary adjustments to work with the generated models
 
@@ -86,16 +87,10 @@ And check if the `elasticsearch` service is `healthy`.
 
 `Kafka GUI`: [http://localhost:9002](http://localhost:9002)<br>
 **NOTES:**<br>
-Add a topic with the name `myTestTopicJson` with, at least, 1 partition.
-Register the `myTestTopicJson-key` and `myTestTopicJson-value` schemas, using the contents of the files `setup/local/tester_kafka_json_schema_key.json` and `setup/local/tester_kafka_json_schema_value.json`, respectively.
-Add a topic with the name `myTestTopicAvro` with, at least, 1 partition.
-Register the `myTestTopicAvro-key` and `myTestTopicAvro-value` schemas, using the contents of the files `setup/local/tester_kafka_avro_schema_key.json` and `setup/local/tester_kafka_avro_schema_value.json`, respectively.
+Add the necessary topics, with at least 1 partition, from the `TOPIC_NAME` constants in each file in `setup/local/Tester/topicInteractions`.
+Register the schemas of each topic from the files in `setup/local/Tester/generatedModels/*.schema.*`.
 
 `Kibana`: [http://localhost:9003](http://localhost:9003)
-
-`Test API`: [http://localhost:10000](http://localhost:10000)<br>
-
-`Test API Swagger UI`: [http://localhost:10000/swagger](http://localhost:10000/swagger)
 
 ### Stop the local environment
 From the root of the project run the command
