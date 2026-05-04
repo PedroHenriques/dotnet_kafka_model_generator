@@ -19,5 +19,6 @@ public static class CliConfigs
   public static Dictionary<string, SchemaTypes> SchemaTypeMap = new Dictionary<string, SchemaTypes>
   {
     { "json", SchemaTypes.JSON },
+    { "avro", SchemaTypes.AVRO },
   };
 }
