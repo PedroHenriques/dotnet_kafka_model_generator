@@ -29,8 +29,8 @@
     <PackageReference Include="NJsonSchema" Version="11.6.1"></PackageReference>
     <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="11.6.1"></PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4"></PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.203" PrivateAssets="all"></PackageReference>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300" PrivateAssets="all"></PackageReference>
     <PackageReference Include="Apache.Avro" Version="1.12.1"></PackageReference>
-    <PackageReference Include="System.CodeDom" Version="10.0.7"></PackageReference>
+    <PackageReference Include="System.CodeDom" Version="10.0.8"></PackageReference>
   </ItemGroup>
 </Project>
