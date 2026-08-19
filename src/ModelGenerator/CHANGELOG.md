@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.5] - 2026-08-19
+
+### Change
+
+- **Dependency Updates**:
+  - Bump `Apache.Avro` version from `1.12.1` to `1.12.2`.
+
 ## [1.1.4] - 2026-08-12
 
 ### Change
