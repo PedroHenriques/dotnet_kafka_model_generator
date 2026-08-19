@@ -175,7 +175,7 @@ namespace Tester.Models.OrderV1
   using global::Avro.Specific;
   
   
-  [global::System.CodeDom.Compiler.GeneratedCodeAttribute("testhost", "1.12.1+9110c693767c1dde2665b2b57939333478b12036")]
+  [global::System.CodeDom.Compiler.GeneratedCodeAttribute("testhost", "1.12.2+8fa2067f70e3012cb3fd9a8839cd97e8c7cc1772")]
   public partial class OrderV1Key : global::Avro.Specific.ISpecificRecord
   {
     
