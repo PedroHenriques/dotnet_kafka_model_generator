@@ -30,7 +30,7 @@
     <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="11.6.1"></PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4"></PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.400" PrivateAssets="all"></PackageReference>
-    <PackageReference Include="Apache.Avro" Version="1.12.1"></PackageReference>
+    <PackageReference Include="Apache.Avro" Version="1.12.2"></PackageReference>
     <PackageReference Include="System.CodeDom" Version="10.0.11"></PackageReference>
   </ItemGroup>
 </Project>
