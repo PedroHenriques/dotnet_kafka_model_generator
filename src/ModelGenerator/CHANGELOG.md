@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - **Dependency Updates**:
   - Bump `Microsoft.SourceLink.GitHub` version from `10.0.400` to `10.0.401`.
+  - Bump `System.CodeDom` version from `10.0.11` to `10.0.12`.
 
 ## [1.1.5] - 2026-08-19
 
