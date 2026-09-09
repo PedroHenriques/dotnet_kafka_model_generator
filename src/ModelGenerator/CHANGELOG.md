@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.6] - 2026-09-09
+
+### Change
+
+- **Dependency Updates**:
+  - Bump `Microsoft.SourceLink.GitHub` version from `10.0.400` to `10.0.401`.
+
 ## [1.1.5] - 2026-08-19
 
 ### Change
