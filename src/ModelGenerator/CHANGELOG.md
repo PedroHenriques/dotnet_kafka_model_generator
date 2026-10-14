@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.7] - 2026-10-14
+
+### Change
+
+- **Dependency Updates**:
+  - Bump `Microsoft.SourceLink.GitHub` version from `10.0.401` to `10.0.402`.
+  - Bump `System.CodeDom` version from `10.0.12` to `10.0.13`.
+
 ## [1.1.6] - 2026-09-09
 
 ### Change
