@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PJHToolkit" Version="10.0.28" />
+    <PackageReference Include="PJHToolkit" Version="10.0.29" />
   </ItemGroup>
 
 </Project>
