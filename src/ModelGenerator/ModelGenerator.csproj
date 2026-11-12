@@ -26,8 +26,8 @@
     <None Include="..\..\LICENSE" Pack="true" PackagePath="\"></None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NJsonSchema" Version="11.6.1"></PackageReference>
-    <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="11.6.1"></PackageReference>
+    <PackageReference Include="NJsonSchema" Version="11.6.2"></PackageReference>
+    <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="11.6.2"></PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4"></PackageReference>
     <PackageReference Include="Apache.Avro" Version="1.12.2"></PackageReference>
     <PackageReference Include="System.CodeDom" Version="11.0.0"></PackageReference>
