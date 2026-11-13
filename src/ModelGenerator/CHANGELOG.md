@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.10] - 2026-11-13
+
+### Change
+
+- **Dependency Updates**:
+  - Bump `NJsonSchema` version from `11.6.1` to `11.6.2`.
+  - Bump `NJsonSchema.CodeGeneration.CSharp` version from `11.6.1` to `11.6.2`.
+
 ## [1.1.9] - 2026-11-11
 
 ### Change
